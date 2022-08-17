@@ -1,0 +1,3 @@
+displayName = Pretty Patch
+author = Tomat (& Rejuvena Team)
+version = 1.0.0
