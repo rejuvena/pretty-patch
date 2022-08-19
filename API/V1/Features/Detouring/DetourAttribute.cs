@@ -30,7 +30,7 @@ namespace PrettyPatch.API.V1.Features.Detouring
 
         private class AssemblylessTypeProvider : ITypeProvider
         {
-            internal AssemblyLoadContext[]? Contexts { get; set; } = null;
+            internal AssemblyLoadContext?[]? Contexts { get; set; }
 
             private string TypeName { get; }
 
@@ -44,6 +44,8 @@ namespace PrettyPatch.API.V1.Features.Detouring
                 if (Contexts is null) throw new TypeNotFoundException(TypeName);
 
                 foreach (AssemblyLoadContext alc in Contexts) {
+                    if (alc is null) continue;
+
                     foreach (Assembly assembly in alc.Assemblies) {
                         Type? type = assembly.GetType(TypeName);
                         if (type is not null) return type;
@@ -101,9 +103,10 @@ namespace PrettyPatch.API.V1.Features.Detouring
             if (MethodProvider is SimpleMethodProvider {TypeProvider: AssemblylessTypeProvider typeProvider})
                 typeProvider.Contexts = new[]
                 {
+                    // TODO: default should satisfy this, but this is preliminary for coremods
+                    AssemblyLoadContext.GetLoadContext(typeof(Terraria.Program).Assembly),
                     AssemblyLoadContext.Default,
                     AssemblyLoadContext.GetLoadContext(mod.GetType().Assembly),
-                    AssemblyLoadContext.GetLoadContext(typeof(Terraria.Program).Assembly)
                 };
         }
     }
