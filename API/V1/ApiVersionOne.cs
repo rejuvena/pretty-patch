@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using MonoMod.RuntimeDetour;
+using PrettyPatch.API.V1.Detouring;
+using PrettyPatch.Util;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Core;
 
 namespace PrettyPatch.API.V1
 {
-    public sealed partial class ApiVersionOne : ApiVersion
+    public sealed class ApiVersionOne : ApiVersion
     {
         private readonly List<Mod> BootstrappedMods = new();
         private bool Initialized;
@@ -46,6 +49,22 @@ namespace PrettyPatch.API.V1
         private static void BootstrapType(Type type, Mod mod) {
             MethodInfo[] methods = type.GetMethods();
             ApplyDetours(methods, mod);
+        }
+        
+        private static void ApplyDetours(IEnumerable<MethodInfo> methods, Mod mod) {
+            foreach (MethodInfo method in methods) {
+                if (!method.IsStatic) continue;
+                
+                IDetourAttribute[] detours = method.GetInterfaceAttributes<IDetourAttribute>();
+                if (detours.Length == 0) continue;
+
+                foreach (IDetourAttribute detour in detours) {
+                    detour.Contextualize(mod);
+                    MethodInfo origMethod = detour.MethodProvider.ResolveMethod();
+                    IDetour hook = new Hook(origMethod, method);
+                    hook.Apply();
+                }
+            }
         }
     }
 }
