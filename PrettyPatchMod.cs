@@ -2,7 +2,7 @@ using System;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using PrettyPatch.API;
-using PrettyPatch.API.V1.Features.Detouring;
+using PrettyPatch.API.V1.Detouring;
 using PrettyPatch.Exceptions;
 using PrettyPatch.Util;
 using Terraria.ModLoader;

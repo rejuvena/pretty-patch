@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using MonoMod.RuntimeDetour;
-using PrettyPatch.API.V1.Features.Detouring;
+using PrettyPatch.API.V1.Detouring;
 using PrettyPatch.Util;
 using Terraria.ModLoader;
 

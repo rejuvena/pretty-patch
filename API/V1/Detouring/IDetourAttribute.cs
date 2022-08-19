@@ -1,6 +1,6 @@
 ﻿using Terraria.ModLoader;
 
-namespace PrettyPatch.API.V1.Features.Detouring
+namespace PrettyPatch.API.V1.Detouring
 {
     public interface IDetourAttribute
     {

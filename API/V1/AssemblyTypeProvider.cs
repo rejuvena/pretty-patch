@@ -1,7 +1,7 @@
 ﻿using System;
 using PrettyPatch.Exceptions;
 
-namespace PrettyPatch.API.V1.Features
+namespace PrettyPatch.API.V1
 {
     public class AssemblyTypeProvider : ITypeProvider
     {

@@ -3,7 +3,7 @@ using System.Reflection;
 using PrettyPatch.Exceptions;
 using PrettyPatch.Util;
 
-namespace PrettyPatch.API.V1.Features
+namespace PrettyPatch.API.V1
 {
     public class SimpleMethodProvider : IMethodProvider
     {

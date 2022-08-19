@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PrettyPatch.API.V1.Features
+namespace PrettyPatch.API.V1
 {
     public class KnownTypeProvider : ITypeProvider
     {

@@ -2,7 +2,7 @@
 using System.Runtime.Loader;
 using Terraria.ModLoader;
 
-namespace PrettyPatch.API.V1.Features.Detouring
+namespace PrettyPatch.API.V1.Detouring
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
     public class DetourAttribute : Attribute, IDetourAttribute

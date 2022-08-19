@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using PrettyPatch.Exceptions;
 
-namespace PrettyPatch.API.V1.Features
+namespace PrettyPatch.API.V1
 {
     public class AssemblylessTypeProvider : ITypeProvider
     {
