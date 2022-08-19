@@ -2,22 +2,22 @@
 using PrettyPatch.Util;
 using Terraria.ModLoader;
 
-namespace PrettyPatch.API.V1.Detouring
+namespace PrettyPatch.API.V1.ILEditing
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
-    public class DetourAttribute : Attribute, IDetourAttribute
+    public class ILEditAttribute : Attribute, IILEditAttribute
     {
         public IMethodProvider MethodProvider { get; }
 
-        public DetourAttribute(string typeName, string methodName) {
+        public ILEditAttribute(string typeName, string methodName) {
             MethodProvider = new SimpleMethodProvider(new AssemblylessTypeProvider(typeName), methodName);
         }
 
-        public DetourAttribute(Type assemblyProvider, string typeName, string methodName) {
+        public ILEditAttribute(Type assemblyProvider, string typeName, string methodName) {
             MethodProvider = new SimpleMethodProvider(new AssemblyTypeProvider(assemblyProvider, typeName), methodName);
         }
 
-        public DetourAttribute(Type type, string methodName) {
+        public ILEditAttribute(Type type, string methodName) {
             MethodProvider = new SimpleMethodProvider(new KnownTypeProvider(type), methodName);
         }
 

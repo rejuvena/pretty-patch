@@ -1,8 +1,11 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using PrettyPatch.API;
 using PrettyPatch.API.V1.Detouring;
+using PrettyPatch.API.V1.ILEditing;
 using PrettyPatch.Exceptions;
 using PrettyPatch.Util;
 using Terraria.ModLoader;
@@ -21,14 +24,15 @@ namespace PrettyPatch
             if (!Bootstrapper.Bootstrap(this, ApiVersion.One))
                 throw new BootstrapFailedModLoadException(Messages.BootstrapFailedPrettyPatch(ApiVersion.One.GetVersion().ToString()));
         }
+        
+        [ILEdit("Terraria.Main", "System.Void DrawCursor(Microsoft.Xna.Framework.Vector2,System.Boolean)")]
+        public static void DrawCursorEdit(ILContext il) {
+            ILCursor c = new(il);
 
-        // Reflection name: Void DrawCursor(Microsoft.Xna.Framework.Vector2, Boolean)
-        // Mono.Cecil name: System.Void DrawCursor(Microsoft.Xna.Framework.Vector2,System.Boolean)
-        [Detour("Terraria.Main", "System.Void DrawCursor(Microsoft.Xna.Framework.Vector2,System.Boolean)")]
-        // [Detour(typeof(Terraria.Program), "Terraria.Main", "DrawCursor")]
-        // [Detour(typeof(Terraria.Main), "DrawCursor")]
-        public static void DrawCursorDetour(Action<Vector2, bool> orig, Vector2 bonus, bool smart) {
-            orig(bonus, !smart);
+            c.Emit(OpCodes.Ldarg_1);
+            c.Emit(OpCodes.Ldc_I4_0);
+            c.Emit(OpCodes.Ceq);
+            c.Emit(OpCodes.Starg, 1);
         }
 
         // TODO: Null checking here? :thinking:
